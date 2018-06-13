@@ -18,6 +18,7 @@ export default {
         type: 'save',
         payload: response,
       });
+      window.location.href(response.data.url);
     },
   },
   reducers: {
