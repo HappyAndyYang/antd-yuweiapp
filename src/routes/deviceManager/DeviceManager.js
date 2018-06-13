@@ -29,12 +29,27 @@ class DeviceManager extends Component {
     //   type: 'devicemanager/getBindTerminal',
     //   payload: { openid },
     // });
-    const { dispatch } = this.props;
-    const backurl = window.document.location.href;
-    dispatch({
-      type: 'weichat/getAuthorizeURLFroWebsite',
-      payload: { backurl },
-    });
+    const {
+      dispatch,
+      match: { params: { code } },
+      user: {
+        data: {
+          openid,
+        },
+      },
+    } = this.props;
+    if (code) {
+      dispatch({
+        type: 'devicemanager/getBindTerminal',
+        payload: { openid },
+      });
+    } else {
+      const backurl = window.document.location.href;
+      dispatch({
+        type: 'weichat/getAuthorizeURLFroWebsite',
+        payload: { backurl },
+      });
+    }
   }
   unbindDevice() {
     const {
