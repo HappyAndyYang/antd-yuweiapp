@@ -49,10 +49,10 @@ class DeviceManager extends Component {
         type: 'weichat/getUserInfo',
         payload: code,
       });
-      dispatch({
-        type: 'devicemanager/getBindTerminal',
-        payload: { openid },
-      });
+      // dispatch({
+      //   type: 'devicemanager/getBindTerminal',
+      //   payload: { openid },
+      // });
     } else {
       const backurl = window.document.location.href;
       dispatch({
