@@ -47,7 +47,7 @@ class DeviceManager extends Component {
     if (code) {
       dispatch({
         type: 'weichat/getUserInfo',
-        payload: code,
+        payload: { code },
       });
       // dispatch({
       //   type: 'devicemanager/getBindTerminal',
