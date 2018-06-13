@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { NavBar, Button, Icon } from 'antd-mobile';
 import styles from './deviceManager.less';
+import { getQueryStrFromUrl } from '../../utils/utils';
 
 @connect(({
   user,
@@ -31,13 +32,13 @@ class DeviceManager extends Component {
     // });
     const {
       dispatch,
-      match: { params: { code } },
       user: {
         data: {
           openid,
         },
       },
     } = this.props;
+    const code = getQueryStrFromUrl('code');
     if (code) {
       dispatch({
         type: 'devicemanager/getBindTerminal',
