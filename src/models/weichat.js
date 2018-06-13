@@ -1,5 +1,5 @@
 // import { routerRedux } from 'dva/router';
-import { getAuthorizeURLFroWebsite } from '../services/basic';
+import { getAuthorizeURLFroWebsite, getUserInfo } from '../services/basic';
 
 export default {
   namespace: 'weichat',
@@ -10,15 +10,18 @@ export default {
   },
 
   effects: {
-    *getAuthorizeURLFroWebsite({ payload }, { call, put }) {
+    *getAuthorizeURLFroWebsite({ payload }, { call }) {
       const response = yield call(getAuthorizeURLFroWebsite, payload);
+      window.location.href = response.data.url;
+    },
+    *getUserInfo({ payload }, { call, put }) {
+      const response = yield call(getUserInfo, payload);
       console.log(payload);
       console.log(response);
       yield put({
         type: 'save',
         payload: response,
       });
-      window.location.href = response.data.url;
     },
   },
   reducers: {

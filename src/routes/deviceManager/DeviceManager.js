@@ -32,7 +32,12 @@ class DeviceManager extends Component {
     // });
     const {
       dispatch,
-      user: {
+      // user: {
+      //   data: {
+      //     openid,
+      //   },
+      // },
+      weichat: {
         data: {
           openid,
         },
@@ -40,6 +45,10 @@ class DeviceManager extends Component {
     } = this.props;
     const code = getQueryStrFromUrl('code');
     if (code) {
+      dispatch({
+        type: 'weichat/getUserInfo',
+        payload: code,
+      });
       dispatch({
         type: 'devicemanager/getBindTerminal',
         payload: { openid },
