@@ -22,6 +22,17 @@ export default {
         type: 'save',
         payload: response,
       });
+      if (response.status === 0) {
+        const str = JSON.stringify({
+          data: response.data,
+          loginTime: new Date(),
+        });
+        localStorage.setItem('weichatInfo', str);
+        yield call({
+          type: 'devicemanager/getBindTerminal',
+          payload: { openid: response.data.openid },
+        });
+      }
     },
   },
   reducers: {
