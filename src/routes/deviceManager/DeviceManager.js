@@ -26,6 +26,7 @@ class DeviceManager extends Component {
         },
       },
     } = this.props;
+    console.log(JSON.parse(localStorage.userCode));
     const { data: { code } } = JSON.parse(localStorage.userCode);
     if (code) {
       dispatch({
