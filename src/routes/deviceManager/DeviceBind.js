@@ -58,6 +58,16 @@ class DeviceBind extends Component {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error && this.props.form.getFieldsValue().mobile) {
         const mobile = this.props.form.getFieldsValue().mobile.replace(/\s+/g, '');
+        const interval = setInterval(() => {
+          let t = this.state.timeslice - 1;
+          let c = `${t}秒重试`;
+          if (this.state.timeslice <= 0) {
+            t = 60;
+            c = '获取验证码';
+            clearInterval(interval);
+          }
+          this.setState({ timeslice: t, content: c });
+        }, 1000);
         dispatch({
           type: 'sms/getSmsAuthCode',
           payload: { mobile },
@@ -66,16 +76,6 @@ class DeviceBind extends Component {
         alert('获取验证码失败');
       }
     });
-    const interval = setInterval(() => {
-      let t = this.state.timeslice - 1;
-      let c = `${t}秒后重试`;
-      if (this.state.timeslice <= 0) {
-        t = 60;
-        c = '获取验证码';
-        clearInterval(interval);
-      }
-      this.setState({ timeslice: t, content: c });
-    }, 1000);
   };
   back = () => {
     const { dispatch } = this.props;
