@@ -20,21 +20,24 @@ class DeviceManager extends Component {
   queryBindTerminal() {
     const {
       dispatch,
-      weichat: {
-        data: {
-          openid,
-        },
-      },
+      // weichat: {
+      //   data: {
+      //     openid,
+      //   },
+      // },
     } = this.props;
     const code = getQueryStrFromUrl('code');
     if (code) {
       dispatch({
         type: 'weichat/getUserInfo',
         payload: { code },
-      }).then(() => dispatch({
-        type: 'devicemanager/getBindTerminal',
-        payload: { openid },
-      }));
+      }).then(() => {
+        const { weichat: { data: { openid } } } = this.props;
+        dispatch({
+          type: 'devicemanager/getBindTerminal',
+          payload: { openid },
+        });
+      });
     } else {
       const backurl = window.document.location.href;
       dispatch({

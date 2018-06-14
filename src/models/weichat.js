@@ -21,15 +21,14 @@ export default {
       yield put({
         type: 'save',
         payload: response,
-      }).then(() => {
-        if (response.status === 0) {
-          const str = JSON.stringify({
-            data: response.data,
-            loginTime: new Date(),
-          });
-          localStorage.setItem('weichatInfo', str);
-        }
       });
+      if (response.status === 0) {
+        const str = JSON.stringify({
+          data: response.data,
+          loginTime: new Date(),
+        });
+        localStorage.setItem('weichatInfo', str);
+      }
     },
   },
   reducers: {
