@@ -30,7 +30,6 @@ class DeviceManager extends Component {
     const userCode = localStorage.getItem('userCode');
     if (userCode || code) {
       if (userCode) {
-        console.log(11111);
         const { data: { openid } } = JSON.parse(localStorage.weichatInfo);
         dispatch({
           type: 'devicemanager/getBindTerminal',
@@ -38,7 +37,6 @@ class DeviceManager extends Component {
         });
       } else {
         localStorage.setItem('userCode', code);
-        console.log(222222);
         dispatch({
           type: 'weichat/getUserInfo',
           payload: { code },
@@ -78,14 +76,8 @@ class DeviceManager extends Component {
     });
   }
   scan() {
-    const {
-      dispatch,
-      user: {
-        data: {
-          openid,
-        },
-      },
-    } = this.props;
+    const { dispatch } = this.props;
+    const { data: { openid } } = JSON.parse(localStorage.weichatInfo);
     dispatch({
       type: 'devicemanager/scan',
       payload: { openid },

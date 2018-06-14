@@ -1,5 +1,6 @@
 import { routerRedux } from 'dva/router';
-import { unBindTerminal, bindTerminal, getBindTerminal, scan } from '../services/deviceManager';
+// import { unBindTerminal, bindTerminal, getBindTerminal, scan } from '../services/deviceManager';
+import { unBindTerminal, bindTerminal, getBindTerminal } from '../services/deviceManager';
 
 export default {
   namespace: 'devicemanager',
@@ -47,14 +48,17 @@ export default {
         yield put(routerRedux.push('/unbind'));
       }
     },
-    *scan({ payload }, { call, put }) {
-      const response = yield call(scan, payload);
-      console.log(payload);
-      console.log(response);
-      yield put({
-        type: 'saveScan',
-        payload: response,
-      });
+    // *scan({ payload }, { call, put }) {
+    //   const response = yield call(scan, payload);
+    //   console.log(payload);
+    //   console.log(response);
+    //   yield put({
+    //     type: 'saveScan',
+    //     payload: response,
+    //   });
+    //   yield put(routerRedux.push('/bind'));
+    // },
+    *scan(_, { put }) {
       yield put(routerRedux.push('/bind'));
     },
   },

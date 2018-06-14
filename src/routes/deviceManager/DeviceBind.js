@@ -20,17 +20,13 @@ class DeviceBind extends Component {
           },
         },
       },
-      user: {
-        data: {
-          openid,
-        },
-      },
       sms: {
         verifiSmsAuthCode: {
           data: { status },
         },
       },
     } = this.props;
+    const { data: { openid } } = JSON.parse(localStorage.weichatInfo);
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
         const { verifyCode } = this.props.form.getFieldsValue();
