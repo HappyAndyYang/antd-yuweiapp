@@ -31,15 +31,10 @@ class DeviceManager extends Component {
     if (userCode || code) {
       if (userCode) {
         console.log(11111);
+        const { data: { openid } } = JSON.parse(localStorage.weichatInfo);
         dispatch({
-          type: 'weichat/getUserInfo',
-          payload: { code: userCode },
-        }).then(() => {
-          const { weichat: { data: { openid } } } = this.props;
-          dispatch({
-            type: 'devicemanager/getBindTerminal',
-            payload: { openid },
-          });
+          type: 'devicemanager/getBindTerminal',
+          payload: { openid },
         });
       } else {
         localStorage.setItem('userCode', code);
