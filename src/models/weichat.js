@@ -1,5 +1,6 @@
 // import { routerRedux } from 'dva/router';
 import { getAuthorizeURLFroWebsite, getUserInfo } from '../services/basic';
+import { getQueryStrFromUrl } from '../utils/utils';
 
 export default {
   namespace: 'weichat',
@@ -13,6 +14,11 @@ export default {
     *getAuthorizeURLFroWebsite({ payload }, { call }) {
       const response = yield call(getAuthorizeURLFroWebsite, payload);
       window.location.href = response.data.url;
+      const code = getQueryStrFromUrl('code');
+      const str = JSON.stringify({
+        data: code,
+      });
+      localStorage.setItem('userCode', str);
     },
     *getUserInfo({ payload }, { call, put }) {
       const response = yield call(getUserInfo, payload);

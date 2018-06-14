@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { NavBar, Button, Icon } from 'antd-mobile';
 import styles from './deviceManager.less';
-import { getQueryStrFromUrl } from '../../utils/utils';
+// import { getQueryStrFromUrl } from '../../utils/utils';
 
 @connect(({
   user,
@@ -20,33 +20,21 @@ class DeviceManager extends Component {
   queryBindTerminal() {
     const {
       dispatch,
-      // weichat: {
-      //   data: {
-      //     openid,
-      //   },
-      // },
+      weichat: {
+        data: {
+          openid,
+        },
+      },
     } = this.props;
-    const code = getQueryStrFromUrl('code');
+    const { data: { code } } = JSON.parse(localStorage.userCode);
     if (code) {
-      if (localStorage.weichatInfo) {
-        const { data: { openid } } = JSON.parse(localStorage.weichatInfo);
-        if (openid) {
-          console.log(111111);
-          dispatch({
-            type: 'devicemanager/getBindTerminal',
-            payload: { openid },
-          });
-        } else {
-          console.log(22222);
-          dispatch({
-            type: 'weichat/getUserInfo',
-            payload: { code },
-          }).then(() => dispatch({
-            type: 'devicemanager/getBindTerminal',
-            payload: { openid },
-          }));
-        }
-      }
+      dispatch({
+        type: 'weichat/getUserInfo',
+        payload: { code },
+      }).then(() => dispatch({
+        type: 'devicemanager/getBindTerminal',
+        payload: { openid },
+      }));
     } else {
       const backurl = window.document.location.href;
       dispatch({
