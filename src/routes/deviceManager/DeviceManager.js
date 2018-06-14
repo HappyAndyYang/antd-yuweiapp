@@ -64,12 +64,8 @@ class DeviceManager extends Component {
           mobile,
         },
       },
-      user: {
-        data: {
-          openid,
-        },
-      },
     } = this.props;
+    const { data: { openid } } = JSON.parse(localStorage.weichatInfo);
     dispatch({
       type: 'devicemanager/unBind',
       payload: { openid, mobile },
