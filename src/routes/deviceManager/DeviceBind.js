@@ -11,6 +11,7 @@ class DeviceBind extends Component {
   state = {
     timeslice: 60,
     content: '获取验证码',
+    disabled: false,
   };
   onSubmit = () => {
     const {
@@ -61,12 +62,14 @@ class DeviceBind extends Component {
         const interval = setInterval(() => {
           let t = this.state.timeslice - 1;
           let c = `${t}秒重试`;
+          let dis = true;
           if (this.state.timeslice <= 0) {
             t = 60;
             c = '获取验证码';
+            dis = false;
             clearInterval(interval);
           }
-          this.setState({ timeslice: t, content: c });
+          this.setState({ timeslice: t, content: c, disabled: dis });
         }, 1000);
         dispatch({
           type: 'sms/getSmsAuthCode',
@@ -112,6 +115,7 @@ class DeviceBind extends Component {
                   type="default"
                   size="small"
                   inline
+                  disabled={this.state.disabled}
                   onClick={this.getVerifyCode}
                   style={{ width: '97px', height: '21px', lineHeight: '21px' }}
                 >
