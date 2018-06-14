@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { NavBar, Button, Icon } from 'antd-mobile';
 import styles from './deviceManager.less';
-// import { getQueryStrFromUrl } from '../../utils/utils';
+import { getQueryStrFromUrl } from '../../utils/utils';
 
 @connect(({
   user,
@@ -40,6 +40,11 @@ class DeviceManager extends Component {
       dispatch({
         type: 'weichat/getAuthorizeURLFroWebsite',
         payload: { backurl },
+      }).then(() => {
+        const str = JSON.stringify({
+          data: getQueryStrFromUrl('code'),
+        });
+        localStorage.setItem('userCode', str);
       });
     }
   }
