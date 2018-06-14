@@ -26,8 +26,7 @@ class DeviceManager extends Component {
         },
       },
     } = this.props;
-    console.log(JSON.parse(localStorage.userCode));
-    const { data: { code } } = JSON.parse(localStorage.userCode);
+    const code = getQueryStrFromUrl('code');
     if (code) {
       dispatch({
         type: 'weichat/getUserInfo',
@@ -41,11 +40,6 @@ class DeviceManager extends Component {
       dispatch({
         type: 'weichat/getAuthorizeURLFroWebsite',
         payload: { backurl },
-      }).then(() => {
-        const str = JSON.stringify({
-          data: getQueryStrFromUrl('code'),
-        });
-        localStorage.setItem('userCode', str);
       });
     }
   }
