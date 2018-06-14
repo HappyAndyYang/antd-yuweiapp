@@ -1,7 +1,7 @@
 /*
  * 工具类
  */
-import { Toast } from 'antd-mobile';
+// import { Toast } from 'antd-mobile';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -36,14 +36,14 @@ function checkStatus(response) {
   // throw error;
 }
 
-function checkResponse(response) {
-  if (response.status === 0) {
-    return response;
-  } else if (response.status === 1) {
-    Toast.info(`请求失败：${response.message}`, 1);
-    return response;
-  }
-}
+// function checkResponse(response) {
+//   if (response.status === 0) {
+//     return response;
+//   } else if (response.status === 1) {
+//     Toast.info(`请求失败：${response.message}`, 1);
+//     return response;
+//   }
+// }
 
 /**
  * Requests a URL, returning a promise.
@@ -78,6 +78,6 @@ export default function request(url, options) {
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => response.json())
-    .then(checkResponse)
+    // .then(checkResponse)
     .catch(error => console.error(error));
 }

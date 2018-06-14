@@ -8,6 +8,10 @@ const ListItem = List.Item;
 
 @connect(({ devicemanager, user, sms }) => ({ devicemanager, user, sms }))
 class DeviceBind extends Component {
+  state = {
+    timeslice: 60,
+    content: '获取验证码',
+  };
   onSubmit = () => {
     const {
       dispatch,
@@ -62,6 +66,16 @@ class DeviceBind extends Component {
         alert('获取验证码失败');
       }
     });
+    const interval = setInterval(() => {
+      let t = this.state.timeslice - 1;
+      let c = `${t}秒后重试`;
+      if (this.state.timeslice <= 0) {
+        t = 60;
+        c = '获取验证码';
+        clearInterval(interval);
+      }
+      this.setState({ timeslice: t, content: c });
+    }, 1000);
   };
   back = () => {
     const { dispatch } = this.props;
@@ -101,7 +115,7 @@ class DeviceBind extends Component {
                   onClick={this.getVerifyCode}
                   style={{ width: '97px', height: '21px', lineHeight: '21px' }}
                 >
-                  获取验证码
+                  {this.state.content}
                 </Button>}
             >
               手机号码
