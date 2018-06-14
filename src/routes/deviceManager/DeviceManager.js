@@ -48,7 +48,10 @@ class DeviceManager extends Component {
       dispatch({
         type: 'weichat/getUserInfo',
         payload: { code },
-      });
+      }).then(() => dispatch({
+        type: 'devicemanager/getBindTerminal',
+        payload: { openid },
+      }));
       // dispatch({
       //   type: 'devicemanager/getBindTerminal',
       //   payload: { openid },

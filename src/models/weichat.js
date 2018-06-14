@@ -28,10 +28,6 @@ export default {
           loginTime: new Date(),
         });
         localStorage.setItem('weichatInfo', str);
-        yield call({
-          type: 'devicemanager/getBindTerminal',
-          payload: { openid: response.data.openid },
-        });
       }
     },
   },
