@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavBar, Icon, PullToRefresh } from 'antd-mobile';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import styles from '../deviceManager/deviceManager.less';
 
 import OrderList from '../../components/WorkOrder/OrderList';
@@ -10,8 +11,6 @@ import OrderList from '../../components/WorkOrder/OrderList';
 class WorkOrderList extends Component {
   componentDidMount() {
     this.queryWorkOrderList();
-    // window.scrollTo(0, 0);
-    // localStorage.setItem('user', 'admin');
   }
   queryWorkOrderList() {
     const {
@@ -42,10 +41,7 @@ class WorkOrderList extends Component {
   }
   back = () => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'user/back',
-      payload: '',
-    });
+    dispatch(routerRedux.push('/'));
   };
   add = () => {
     const { dispatch } = this.props;
