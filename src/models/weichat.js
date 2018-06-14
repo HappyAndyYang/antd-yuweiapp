@@ -12,8 +12,7 @@ export default {
   effects: {
     *getAuthorizeURLFroWebsite({ payload }, { call }) {
       const response = yield call(getAuthorizeURLFroWebsite, payload);
-      console.log(response);
-      // window.location.href = response.data.url;
+      window.location.href = response.data.url;
     },
     *getUserInfo({ payload }, { call, put }) {
       const response = yield call(getUserInfo, payload);

@@ -27,17 +27,34 @@ class DeviceManager extends Component {
       // },
     } = this.props;
     const code = getQueryStrFromUrl('code');
-    if (code) {
-      dispatch({
-        type: 'weichat/getUserInfo',
-        payload: { code },
-      }).then(() => {
-        const { weichat: { data: { openid } } } = this.props;
+    const userCode = localStorage.getItem('userCode');
+    if (userCode || code) {
+      if (userCode) {
+        console.log(11111);
         dispatch({
-          type: 'devicemanager/getBindTerminal',
-          payload: { openid },
+          type: 'weichat/getUserInfo',
+          payload: { code: userCode },
+        }).then(() => {
+          const { weichat: { data: { openid } } } = this.props;
+          dispatch({
+            type: 'devicemanager/getBindTerminal',
+            payload: { openid },
+          });
         });
-      });
+      } else {
+        localStorage.setItem('userCode', code);
+        console.log(222222);
+        dispatch({
+          type: 'weichat/getUserInfo',
+          payload: { code },
+        }).then(() => {
+          const { weichat: { data: { openid } } } = this.props;
+          dispatch({
+            type: 'devicemanager/getBindTerminal',
+            payload: { openid },
+          });
+        });
+      }
     } else {
       const backurl = window.document.location.href;
       dispatch({
