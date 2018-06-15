@@ -79,19 +79,19 @@ class DeviceManager extends Component {
       payload: { openid },
     });
   }
-  back = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'user/back',
-      payload: '',
-    });
-  };
+  // back = () => {
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'user/back',
+  //     payload: '',
+  //   });
+  // };
   renderUnbind() {
     const { devicemanager: { data: { phonenumber, mobile } } } = this.props;
 
     return (
       <div>
-        <NavBar mode="light" icon={<Icon type="left" />} onLeftClick={this.back} className={styles.navbar}>终端管理</NavBar>
+        <NavBar mode="light" /* icon={<Icon type="left" />} onLeftClick={this.back} */ className={styles.navbar}>终端管理</NavBar>
         <p className={styles.content}>您的固定电话号码是{phonenumber}</p>
         <p className={styles.content}>您已经绑定了号码{mobile}</p>
         <Button type="default" className={styles.button} onClick={() => this.unbindDevice()}>解绑</Button>

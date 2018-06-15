@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { NavBar, Button, InputItem, List, Icon, Toast } from 'antd-mobile';
+import { NavBar, Button, InputItem, List, /* Icon, */ Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import styles from './deviceManager.less';
 
@@ -80,13 +80,13 @@ class DeviceBind extends Component {
       }
     });
   };
-  back = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'user/back',
-      payload: '',
-    });
-  };
+  // back = () => {
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'user/back',
+  //     payload: '',
+  //   });
+  // };
   render() {
     const { getFieldProps } = this.props.form;
     const {
@@ -101,7 +101,7 @@ class DeviceBind extends Component {
     } = this.props;
     return (
       <div>
-        <NavBar mode="light" icon={<Icon type="left" />} onLeftClick={this.back} className={styles.navbar}>终端管理</NavBar>
+        <NavBar mode="light" /* icon={<Icon type="left" />} onLeftClick={this.back} */ className={styles.navbar}>终端管理</NavBar>
         <form>
           <List>
             <ListItem><p style={{ whiteSpace: 'pre' }}>{deviceName}    Mac：{mac}</p></ListItem>
