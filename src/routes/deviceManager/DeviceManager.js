@@ -102,7 +102,7 @@ class DeviceManager extends Component {
   renderScan() {
     return (
       <div>
-        <NavBar mode="light" icon={<Icon type="left" />} onLeftClick={this.back} className={styles.navbar}>终端管理</NavBar>
+        <NavBar mode="light" /* icon={<Icon type="left" />} onLeftClick={this.back} */ className={styles.navbar}>终端管理</NavBar>
         <Button className={styles.button} onClick={() => this.scan()}>扫一扫</Button>
       </div>
     );
