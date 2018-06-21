@@ -25,8 +25,20 @@ export async function login(params) {
     body: params,
   });
 }
+export async function stafflogin(params) {
+  return request('/api/v1/syt/stafflogin', {
+    method: 'POST',
+    body: params,
+  });
+}
 export async function logout(params) {
   return request('/api/v1/syt/logout', {
+    method: 'POST',
+    body: params,
+  });
+}
+export async function stafflogout(params) {
+  return request('/api/v1/syt/stafflogout', {
     method: 'POST',
     body: params,
   });
@@ -52,4 +64,13 @@ export async function uploadpic(params) {
 }
 export async function getNumberBindList(params) {
   return request(`/api/v1/numberManager/numberBindList?${stringify(params)}`);
+}
+export async function getStaffOrderList(params) {
+  return request(`/api/v1/stafforder?${stringify(params)}`);
+}
+export async function updateStaffOrder(params) {
+  return request('/api/v1/updateStafforder', {
+    method: 'POST',
+    body: params,
+  });
 }

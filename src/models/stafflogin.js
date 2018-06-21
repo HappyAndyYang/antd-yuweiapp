@@ -1,20 +1,20 @@
 import { routerRedux } from 'dva/router';
-import { login, logout } from '../services/deviceManager';
+import { stafflogin, stafflogout } from '../services/deviceManager';
 
 export default {
-  namespace: 'login',
+  namespace: 'stafflogin',
   state: {
     status: 0,
     meassage: '',
     data: {
-      username: '',
-      userid: '',
-      groupname: '',
+      staffname: '',
+      staffid: '',
     },
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(login, payload);
+      const response = yield call(stafflogin, payload);
+      // console.log(payload);
       // console.log(response);
       yield put({
         type: 'save',
@@ -25,13 +25,14 @@ export default {
           data: response.data,
           loginTime: new Date(),
         });
-        localStorage.setItem('login', str);
-        yield put(routerRedux.push('/'));
+        localStorage.setItem('stafflogin', str);
+        // yield put(routerRedux.push('/staffOrderList'));
+        yield put(routerRedux.push('/stafforderlist'));
       }
     },
     *logout({ payload }, { call, put }) {
       // console.log(payload);
-      const response = yield call(logout, payload);
+      const response = yield call(stafflogout, payload);
       // console.log(response);
       yield put({
         type: 'save',

@@ -1,6 +1,8 @@
-import mockjs from 'mockjs';
-import { format, delay } from 'roadhog-api-doc';
-import { wxCode, workOrderList, bindTerminal, numberBindList, numberList } from './mock/api';
+// import mockjs from 'mockjs';
+// import { format, delay } from 'roadhog-api-doc';
+// import { wxCode, workOrderList, bindTerminal, numberBindList, numberList } from './mock/api';
+import { delay } from 'roadhog-api-doc';
+import { login, staffWorkOrderList, updateStafforder } from './mock/staff';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -101,6 +103,10 @@ const proxy = {
   // 'POST /api/v1/sms/verifiSmsAuthCode': 'http://101.132.159.46:3001',
   'POST /api/v1/sms/verifiSmsAuthCode': 'https://vcom.club:3010',
   'GET /api/v1/wx/getAuthorizeURLForWebsite': 'https://vcom.club:3010',
+
+  'POST /api/v1/syt/stafflogin': login,
+  'GET /api/v1/stafforder': staffWorkOrderList,
+  'POST /api/v1/updateStafforder': updateStafforder,
 };
 
 export default noProxy ? {} : delay(proxy, 1000);

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { NavBar, Button, List, InputItem, TextareaItem, ImagePicker, Icon, Picker, Flex } from 'antd-mobile';
+import { NavBar, Button, List, InputItem, TextareaItem, ImagePicker, Icon, Picker, Flex, Modal } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+// import { routerRedux } from 'dva/router';
 import lrz from 'lrz';
 import Promise from 'bluebird';
 import { faultType } from '../../../mock/api';
@@ -61,6 +61,14 @@ class WorkOrderCommit extends Component {
       }
     });
   };
+  onClose = () => {
+    const {
+      dispatch,
+    } = this.props;
+    dispatch({
+      type: 'workordercommit/onclose',
+    });
+  };
   upload = () => {
     const { dispatch, workordercommit: { data: { pictures } } } = this.props;
     const imgs = Promise.all(pictures.map(async (item) => {
@@ -77,16 +85,18 @@ class WorkOrderCommit extends Component {
       type: 'workordercommit/upload',
       payload: data,
     }));
-  }
+  };
   back = () => {
     const { dispatch } = this.props;
-    dispatch(routerRedux.push('/fault'));
+    // dispatch(routerRedux.push('/fault'));
+    dispatch({
+      type: 'user/back',
+    });
   };
   render() {
     const { getFieldProps } = this.props.form;
-    const { workordercommit: { data: { pictures }, upload }, loading } = this.props;
+    const { workordercommit: { data: { pictures }, upload, flag, status }, loading } = this.props;
     const emptyMap = [];
-
     for (let index = 0; index < 4 - upload.urls.length; index += 1) {
       emptyMap.push(index);
     }
@@ -125,6 +135,19 @@ class WorkOrderCommit extends Component {
           </List>
         </form>
         <Button type="default" onClick={this.onSubmit} className={styles.button}>提交</Button>
+        <Modal
+          visible={flag}
+          transparent
+          maskClosable={false}
+          onClose={this.onClose}
+          title="提交更新"
+          footer={[{ text: '确定', onPress: () => { this.onClose(); } }]}
+          // wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+        >
+          <div style={{ height: 20 }}>
+            { status === 0 ? '数据更新成功' : '数据提交失败，请重试！'}
+          </div>
+        </Modal>
       </div>
     );
   }

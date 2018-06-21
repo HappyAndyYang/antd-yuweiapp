@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { List } from 'antd-mobile';
 import moment from 'moment';
-import styles from './workOrder.less';
-import WorkOrder from './WorkOrder';
+import styles from './staffWorkOrder.less';
+import StaffWorkOrder from './StaffWorkOrder';
 import { faultType, dealType } from '../../../mock/api';
 
 const ListItem = List.Item;
 const ListBrief = ListItem.Brief;
-class OrderList extends Component {
+class StaffOrderList extends Component {
   render() {
     const { dispatch, datalist } = this.props;
     // const t = new Date('2018-06-12T08:46:33.000Z');
@@ -23,7 +23,7 @@ class OrderList extends Component {
           datalist.map(item => (
             <ListItem key={item.orderid}>
               <ListBrief>
-                <WorkOrder
+                <StaffWorkOrder
                   dispatch={dispatch}
                   orderid={item.orderid}
                   type={(faultType.find(faultItem => faultItem.value === item.type).label)}
@@ -46,4 +46,4 @@ class OrderList extends Component {
   }
 }
 
-export default OrderList;
+export default StaffOrderList;

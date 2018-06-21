@@ -10,8 +10,8 @@ export default {
   effects: {
     *getNumberBindList({ payload }, { call, put }) {
       const response = yield call(getNumberBindList, payload);
-      console.log(payload);
-      console.log(response);
+      // console.log(payload);
+      // console.log(response);
       yield put({
         type: 'save',
         payload: response,

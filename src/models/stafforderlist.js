@@ -1,8 +1,7 @@
-import { routerRedux } from 'dva/router';
-import { getWorkOrderList } from '../services/deviceManager';
+import { getStaffOrderList, updateStaffOrder } from '../services/deviceManager';
 
 export default {
-  namespace: 'workorderlist',
+  namespace: 'stafforderlist',
   state: {
     status: 1,
     meassage: '',
@@ -14,13 +13,16 @@ export default {
       pagesize: 10,
       current: 1,
     },
+    updateData: {
+      flag: false,
+    },
   },
   effects: {
-    *getWorkOrderList({ payload }, { call, put, select }) {
-      const response = yield call(getWorkOrderList, payload);
-      const list = yield select(state => state.workorderlist.data.list);
-      list.push(...response.data.list);
+    *getStaffOrderList({ payload }, { call, put, select }) {
       // console.log(payload);
+      const response = yield call(getStaffOrderList, payload);
+      const list = yield select(state => state.stafforderlist.data.list);
+      list.push(...response.data.list);
       // console.log(response);
       if (response.data.list.length !== 0 && response.status === 0) {
         yield put({
@@ -40,6 +42,29 @@ export default {
         });
       }
     },
+    *commit({ payload }, { call, put }) {
+      // console.log(payload);
+      const response = yield call(updateStaffOrder, payload);
+      response.flag = true;
+      // if (response.status === 0) {
+      //   response.flag = true;
+      // } else {
+      //   response.flag = false;
+      // }
+      // console.log(response);
+      yield put({
+        type: 'saveUpdate',
+        payload: response,
+      });
+    },
+    *onclose(_, { put, select }) {
+      const updateData = yield select(state => state.stafforderlist.updateData);
+      updateData.flag = false;
+      yield put({
+        type: 'saveUpdate',
+        payload: updateData,
+      });
+    },
     *init(_, { put }) {
       const list = [];
       yield put({
@@ -58,15 +83,18 @@ export default {
         },
       });
     },
-    *addWorkOrder(_, { put }) {
-      yield put(routerRedux.push('/fault/commit'));
-    },
   },
   reducers: {
     save(state, action) {
       return {
         ...state,
         ...action.payload,
+      };
+    },
+    saveUpdate(state, action) {
+      return {
+        ...state,
+        updateData: action.payload,
       };
     },
   },

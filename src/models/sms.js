@@ -10,7 +10,7 @@ export default {
   effects: {
     *getSmsAuthCode({ payload }, { call, put }) {
       const response = yield call(getSmsAuthCode, payload);
-      console.log(response);
+      // console.log(response);
       yield put({
         type: 'saveGetsmsCode',
         payload: response,

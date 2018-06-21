@@ -9,11 +9,11 @@ export default {
   },
   effects: {
     *upload({ payload }, { call, put, all }) {
-      console.log(payload);
+      // console.log(payload);
       const img = payload.map(item => call(uploadpic, item));
       // const response = yield call(uploadpic, payload);
       const response = yield all(img);
-      console.log(response);
+      // console.log(response);
       const urls = [];
       response.forEach((item) => { if (item.data) urls.push(item.data.url); });
       yield put({

@@ -263,15 +263,15 @@ export const faultType = [
 
 export const dealType = [
   {
-    status: '未处理',
-    dealflag: 1,
+    label: '未处理',
+    value: 1,
   },
   {
-    status: '正在处理',
-    dealflag: 2,
+    label: '正在处理',
+    value: 2,
   },
   {
-    status: '已处理',
-    dealflag: 3,
+    label: '已处理',
+    value: 3,
   },
 ];

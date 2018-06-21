@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavBar, Icon, PullToRefresh } from 'antd-mobile';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+// import { routerRedux } from 'dva/router';
 import styles from '../deviceManager/deviceManager.less';
 
 import OrderList from '../../components/WorkOrder/OrderList';
@@ -30,18 +30,25 @@ class WorkOrderList extends Component {
   refresh = () => {
     const {
       dispatch,
-      workorderlist: { pagination: { pagesize, current } },
+      workorderlist: { pagination: { pagesize, current, total } },
     } = this.props;
     const { data: { userid } } = JSON.parse(localStorage.login);
-    const page = current + 1;
-    dispatch({
-      type: 'workorderlist/getWorkOrderList',
-      payload: { userid, pagesize, currentpage: page },
-    });
+    let page = current;
+    if (total >= pagesize) {
+      page = current + 1;
+      dispatch({
+        type: 'workorderlist/getWorkOrderList',
+        payload: { userid, pagesize, currentpage: page },
+      });
+    }
   }
   back = () => {
     const { dispatch } = this.props;
-    dispatch(routerRedux.push('/'));
+    // dispatch(routerRedux.push('/'));
+    dispatch({
+      type: 'user/back',
+      payload: '',
+    });
   };
   add = () => {
     const { dispatch } = this.props;

@@ -1,4 +1,4 @@
-import { routerRedux } from 'dva/router';
+// import { routerRedux } from 'dva/router';
 import { commitWorkOrder, uploadpic } from '../services/deviceManager';
 
 export default {
@@ -13,12 +13,13 @@ export default {
       urls: [],
       status: [],
     },
+    flag: false,
   },
   effects: {
     *commit({ payload }, { call, put }) {
       const response = yield call(commitWorkOrder, payload);
-      console.log(payload);
-      console.log(response);
+      // console.log(payload);
+      // console.log(response);
       yield put({
         type: 'save',
         payload: response,
@@ -29,9 +30,19 @@ export default {
         type: 'saveUrl',
         payload: { urls, status },
       });
-      if (response.status === 0) {
-        yield put(routerRedux.push('/fault'));
-      }
+      // if (response.status === 0) {
+      //   yield put(routerRedux.push('/fault'));
+      // }
+      yield put({
+        type: 'saveFlag',
+        payload: true,
+      });
+    },
+    *onclose(_, { put }) {
+      yield put({
+        type: 'saveFlag',
+        payload: false,
+      });
     },
     *change({ payload }, { put }) {
       const { files, urls, status } = payload;
@@ -45,11 +56,11 @@ export default {
       });
     },
     *upload({ payload }, { call, put, all }) {
-      console.log(payload);
+      // console.log(payload);
       const img = payload.map(item => call(uploadpic, item));
       // const response = yield call(uploadpic, payload);
       const response = yield all(img);
-      console.log(response);
+      // console.log(response);
       const uploadRes = {
         urls: [],
         status: [],
@@ -83,8 +94,8 @@ export default {
       };
     },
     saveUrl(state, action) {
-      console.log('saveUrl');
-      console.log(action.payload);
+      // console.log('saveUrl');
+      // console.log(action.payload);
       return {
         ...state,
         upload: action.payload,
@@ -94,6 +105,12 @@ export default {
       return {
         ...state,
         ...action.payload,
+      };
+    },
+    saveFlag(state, action) {
+      return {
+        ...state,
+        flag: action.payload,
       };
     },
   },

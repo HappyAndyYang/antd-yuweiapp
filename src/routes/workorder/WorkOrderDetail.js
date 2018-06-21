@@ -44,7 +44,7 @@ class WorkOrderDetail extends Component {
         <ImagePicker files={detailData.pictures} selectable={false} />
         <p className={styles.content} style={{ marginTop: '20px' }} >联系人号码：{detailData.mobile}</p>
         <p className={styles.content}>
-          处理状态：{(dealType.find(dealItem => dealItem.dealflag === detailData.dealflag).status)}
+          处理状态：{(dealType.find(dealItem => dealItem.value === detailData.dealflag).label)}
         </p>
         <p className={styles.content}>
           创建时间：{moment(detailData.createtime).format('YYYY-MM-DD hh:mm:ss')}

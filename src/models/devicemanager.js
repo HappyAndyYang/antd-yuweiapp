@@ -20,8 +20,8 @@ export default {
   effects: {
     *getBindTerminal({ payload }, { call, put }) {
       const response = yield call(getBindTerminal, payload);
-      console.log(payload);
-      console.log(response);
+      // console.log(payload);
+      // console.log(response);
       yield put({
         type: 'save',
         payload: response,
@@ -29,17 +29,17 @@ export default {
     },
     *unBind({ payload }, { call, put }) {
       const response = yield call(unBindTerminal, payload);
-      console.log(payload);
-      console.log(response);
+      // console.log(payload);
+      // console.log(response);
       yield put({
         type: 'save',
         payload: response,
       });
     },
     *bind({ payload }, { call, put }) {
-      console.log(payload);
+      // console.log(payload);
       const response = yield call(bindTerminal, payload);
-      console.log(response);
+      // console.log(response);
       yield put({
         type: 'save',
         payload: response,
