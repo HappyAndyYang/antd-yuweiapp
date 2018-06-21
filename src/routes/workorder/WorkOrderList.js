@@ -74,7 +74,7 @@ class WorkOrderList extends Component {
           工单列表
         </NavBar>
         <PullToRefresh
-          damping={60}
+          damping={30}
           style={{
             height: document.documentElement.clientHeight,
             overflow: 'auto',

@@ -20,7 +20,7 @@ export default {
       });
     },
     *back(_, { put }) {
-      yield put(routerRedux.goBack());
+      yield put(routerRedux.go(-1));
     },
   },
   reducers: {
