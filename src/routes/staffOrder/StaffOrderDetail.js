@@ -20,11 +20,11 @@ class StaffOrderDetail extends Component {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
         const { dealcontent } = this.props.form.getFieldsValue();
-        const dealflag = this.props.form.getFieldsValue().dealflag ?
-          this.props.form.getFieldsValue().dealflag : [];
+        const dealstatus = this.props.form.getFieldsValue().dealstatus ?
+          this.props.form.getFieldsValue().dealstatus : [];
         dispatch({
           type: 'stafforderlist/commit',
-          payload: { staffid, dealcontent, orderid, dealflag: dealflag[0] },
+          payload: { staffid, dealcontent, orderid, dealstatus: dealstatus[0] },
         });
       } else {
         alert('登陆失败');
@@ -92,7 +92,7 @@ class StaffOrderDetail extends Component {
           </WingBlank>
           <ImagePicker files={detailData.pictures} selectable={false} />
           <p className={styles.content} style={{ marginTop: '20px' }} >联系人号码：{detailData.mobile}</p>
-          <Picker data={dealType} cols={1} {...getFieldProps('dealflag')}>
+          <Picker data={dealType} cols={1} {...getFieldProps('dealstatus')}>
             <ListItem arrow="horizontal" className={styles.dealType}>处理状态</ListItem>
           </Picker>
           <p className={styles.content}>

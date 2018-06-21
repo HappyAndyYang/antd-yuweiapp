@@ -60,7 +60,7 @@ export default {
       const img = payload.map(item => call(uploadpic, item));
       // const response = yield call(uploadpic, payload);
       const response = yield all(img);
-      // console.log(response);
+      console.log(response);
       const uploadRes = {
         urls: [],
         status: [],

@@ -28,7 +28,7 @@ class OrderList extends Component {
                   orderid={item.orderid}
                   type={(faultType.find(faultItem => faultItem.value === item.type).label)}
                   orderstatus={
-                    (dealType.find(dealItem => dealItem.value === item.dealflag).label)
+                    (dealType.find(dealItem => dealItem.value === item.dealstatus).label)
                   }
                   createtime={moment(item.createtime).format('YYYY-MM-DD hh:mm:ss')}
                 />

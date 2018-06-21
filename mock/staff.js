@@ -23,7 +23,7 @@ export const staffWorkOrderList = {
         mobile: '13425679876',
         phonenumber: '02167129872',
         phonetype: 'yealink-t49g',
-        dealflag: 1,
+        dealstatus: 1,
         detail: '呼出受限',
         subject: '报障工单',
         pictures: [{
@@ -47,7 +47,7 @@ export const staffWorkOrderList = {
         mobile: '13425679870',
         phonenumber: '02167129872',
         phonetype: 'yealink-t49g',
-        dealflag: 3,
+        dealstatus: 3,
         detail: '待处理',
         subject: '报障工单',
         pictures: [{
@@ -71,7 +71,7 @@ export const staffWorkOrderList = {
         mobile: '13425679871',
         phonenumber: '02167129872',
         phonetype: 'yealink-t49g',
-        dealflag: 2,
+        dealstatus: 2,
         detail: '正在处理',
         subject: '报障工单',
         pictures: [{
