@@ -26,7 +26,7 @@ export async function login(params) {
   });
 }
 export async function stafflogin(params) {
-  return request('/api/v1/syt/staff/login', {
+  return request('/api/v1/staff/login', {
     method: 'POST',
     body: params,
   });
@@ -38,7 +38,7 @@ export async function logout(params) {
   });
 }
 export async function stafflogout(params) {
-  return request('/api/v1/syt/staff/logout', {
+  return request('/api/v1/staff/logout', {
     method: 'POST',
     body: params,
   });
@@ -48,7 +48,8 @@ export async function getWorkOrderList(params) {
   // return request(`/faultorder/${params.userid}`);
 }
 export async function getWorkOrderInfo(params) {
-  return request(`/api/v1/faultorder?${stringify(params)}`);
+  // return request(`/api/v1/faultorder?${stringify(params)}`);
+  return request(`/api/v1/faultorder/${params.orderid}`);
 }
 export async function commitWorkOrder(params) {
   return request('/api/v1/faultorder', {

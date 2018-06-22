@@ -12,7 +12,7 @@ class StaffLogin extends Component {
       const { data: { staffname, staffid }, loginTime } = JSON.parse(localStorage.stafflogin);
       const now = (new Date()).getTime();
       const day = Math.floor((now - (new Date(loginTime).getTime())) / (24 * 3600 * 1000));
-      console.log(day);
+      // console.log(day);
       if (staffname && staffid && day < 15) {
         const { dispatch } = this.props;
         dispatch(routerRedux.push('/stafforderlist'));
@@ -37,7 +37,7 @@ class StaffLogin extends Component {
   render() {
     const { getFieldProps } = this.props.form;
     const { stafflogin: { status } } = this.props;
-    document.title = '员工登陆';
+    // document.title = '员工登陆';
     return (
       <div>
         <NavBar className={styles.navbar}>员工登陆</NavBar>

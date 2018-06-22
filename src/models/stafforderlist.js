@@ -40,6 +40,11 @@ export default {
             },
           },
         });
+      } else {
+        yield put({
+          type: 'save',
+          payload: response,
+        });
       }
     },
     *commit({ payload }, { call, put }) {

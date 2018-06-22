@@ -76,7 +76,11 @@ function RouterConfig({ history, app }) {
   });
   const StaffOrderDetail = Dynamic({
     app,
-    models: () => [import('./models/stafforderlist'), import('./models/user')],
+    models: () => [
+      import('./models/stafforderlist'),
+      import('./models/user'),
+      import('./models/workorderlist'),
+    ],
     component: () => import('./routes/staffOrder/StaffOrderDetail'),
   });
 

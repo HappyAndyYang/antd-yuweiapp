@@ -14,8 +14,8 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(stafflogin, payload);
-      // console.log(payload);
-      // console.log(response);
+      console.log(payload);
+      console.log(response);
       yield put({
         type: 'save',
         payload: response,

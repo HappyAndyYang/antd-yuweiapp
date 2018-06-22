@@ -104,8 +104,8 @@ const proxy = {
   'POST /api/v1/sms/verifiSmsAuthCode': 'https://vcom.club:3010',
   'GET /api/v1/wx/getAuthorizeURLForWebsite': 'https://vcom.club:3010',
 
-  // 'POST /api/v1/syt/stafflogin': login,
-  'POST /api/v1/syt/staff/login': 'https://vcom.club:3010',
+  // 'POST /api/v1/stafflogin': login,
+  'POST /api/v1/staff/login': 'https://vcom.club:3010',
   // 'GET /api/v1/stafforder': staffWorkOrderList,
   'GET /api/v1/staff/order': 'https://vcom.club:3010',
   // 'POST /api/v1/updateStafforder': updateStafforder,

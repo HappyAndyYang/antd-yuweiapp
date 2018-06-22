@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { List } from 'antd-mobile';
-import moment from 'moment';
+// import moment from 'moment';
 import styles from './workOrder.less';
 import WorkOrder from './WorkOrder';
 import { faultType, dealType } from '../../../mock/api';
@@ -30,7 +30,8 @@ class OrderList extends Component {
                   orderstatus={
                     (dealType.find(dealItem => dealItem.value === item.dealstatus).label)
                   }
-                  createtime={moment(item.createtime).format('YYYY-MM-DD hh:mm:ss')}
+                  createtime={item.createtime}
+                  // createtime={moment(item.createtime).format('YYYY-MM-DD hh:mm:ss')}
                 />
               </ListBrief>
             </ListItem>

@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { getWorkOrderList } from '../services/deviceManager';
+import { getWorkOrderList, getWorkOrderInfo } from '../services/deviceManager';
 
 export default {
   namespace: 'workorderlist',
@@ -13,6 +13,9 @@ export default {
       total: 0,
       pagesize: 10,
       current: 1,
+    },
+    detail: {
+      status: 1,
     },
   },
   effects: {
@@ -38,7 +41,24 @@ export default {
             },
           },
         });
+      } else {
+        yield put({
+          type: 'save',
+          payload: response,
+        });
       }
+    },
+    *getWorkOrderDetail({ payload }, { call, put }) {
+      console.log(payload);
+      const response = yield call(getWorkOrderInfo, payload);
+      console.log(response);
+      const data = {};
+      data.detail = response;
+      console.log(data);
+      yield put({
+        type: 'save',
+        payload: data,
+      });
     },
     *init(_, { put }) {
       const list = [];
