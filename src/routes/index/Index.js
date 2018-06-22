@@ -6,6 +6,12 @@ import styles from '../deviceManager/deviceManager.less';
 
 @connect(({ index }) => ({ index }))
 class Main extends Component {
+  componentDidMount() {
+    if (!localStorage.login) {
+      const { dispatch } = this.props;
+      dispatch(routerRedux.push('/login'));
+    }
+  }
   order = () => {
     const { dispatch } = this.props;
     dispatch(routerRedux.push('/order'));
@@ -22,10 +28,21 @@ class Main extends Component {
     const { dispatch } = this.props;
     dispatch(routerRedux.push('/bindlist'));
   };
+  logout = () => {
+    const { dispatch } = this.props;
+    localStorage.removeItem('login');
+    dispatch(routerRedux.push('/login'));
+  }
   render() {
     return (
       <div>
-        <NavBar className={styles.navbar}>商云通</NavBar>
+        <NavBar
+          className={styles.navbar}
+          // rightContent="退出"
+          rightContent={<Button size="small" style={{ background: '#FFCC00', border: '0px solid #FFCC00' }} onClick={this.logout}> 退出 </Button>}
+        >
+          商云通
+        </NavBar>
         <WhiteSpace size="lg" />
         <Flex justify="start" wrap="wrap" className={styles.content}>
           <Button className={styles.flexItem} onClick={this.order}>订购</Button>

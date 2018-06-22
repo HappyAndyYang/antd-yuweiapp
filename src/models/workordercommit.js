@@ -16,32 +16,31 @@ export default {
     flag: false,
   },
   effects: {
-    *commit({ payload }, { call, put }) {
+    *commit({ payload }, { call, put, select }) {
+      const pictures = yield select(state => state.workordercommit.data.pictures);
       const response = yield call(commitWorkOrder, payload);
+      response.data = { pictures };
+      response.flag = true;
       // console.log(payload);
       // console.log(response);
       yield put({
         type: 'save',
         payload: response,
       });
-      const urls = [];
-      const status = [];
-      yield put({
-        type: 'saveUrl',
-        payload: { urls, status },
-      });
-      // if (response.status === 0) {
-      //   yield put(routerRedux.push('/fault'));
-      // }
-      yield put({
-        type: 'saveFlag',
-        payload: true,
-      });
     },
     *onclose(_, { put }) {
       yield put({
-        type: 'saveFlag',
-        payload: false,
+        type: 'save',
+        payload: {
+          flag: false,
+          upload: {
+            urls: [],
+            status: [],
+          },
+          data: {
+            pictures: [],
+          },
+        },
       });
     },
     *change({ payload }, { put }) {
@@ -70,7 +69,7 @@ export default {
         uploadRes.status.push(item.status);
       });
       yield put({
-        type: 'saveUpload',
+        type: 'save',
         payload: { upload: uploadRes },
       });
     },
@@ -80,9 +79,6 @@ export default {
       return {
         ...state,
         ...action.payload,
-        data: {
-          pictures: [],
-        },
       };
     },
     savePic(state, action) {
@@ -99,18 +95,6 @@ export default {
       return {
         ...state,
         upload: action.payload,
-      };
-    },
-    saveUpload(state, action) {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    },
-    saveFlag(state, action) {
-      return {
-        ...state,
-        flag: action.payload,
       };
     },
   },

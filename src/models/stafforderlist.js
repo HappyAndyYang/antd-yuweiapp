@@ -23,7 +23,7 @@ export default {
       const response = yield call(getStaffOrderList, payload);
       const list = yield select(state => state.stafforderlist.data.list);
       list.push(...response.data.list);
-      // console.log(response);
+      console.log(response);
       if (response.data.list.length !== 0 && response.status === 0) {
         yield put({
           type: 'save',

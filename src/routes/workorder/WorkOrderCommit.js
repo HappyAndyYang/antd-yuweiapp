@@ -37,30 +37,6 @@ class WorkOrderCommit extends Component {
       payload: changeData,
     });
   }
-  onSubmit = () => {
-    const {
-      dispatch,
-      workordercommit: {
-        upload: { urls },
-      },
-    } = this.props;
-    const { data: { userid, username, groupname } } = JSON.parse(localStorage.login);
-    this.props.form.validateFields({ force: true }, (error) => {
-      if (!error) {
-        const { phonenumber, detail } = this.props.form.getFieldsValue();
-        const mobile = this.props.form.getFieldsValue().mobile &&
-          this.props.form.getFieldsValue().mobile.replace(/\s+/g, '');
-        const type = this.props.form.getFieldsValue().type &&
-          this.props.form.getFieldsValue().type[0];
-        dispatch({
-          type: 'workordercommit/commit',
-          payload: { phonenumber, type, mobile, detail, urls, username, userid, groupname },
-        });
-      } else {
-        alert('登陆失败');
-      }
-    });
-  };
   onClose = () => {
     const {
       dispatch,
@@ -69,8 +45,56 @@ class WorkOrderCommit extends Component {
       type: 'workordercommit/onclose',
     });
   };
-  upload = () => {
-    const { dispatch, workordercommit: { data: { pictures } } } = this.props;
+  // onSubmit = () => {
+  //   const {
+  //     dispatch,
+  //     workordercommit: {
+  //       upload: { urls },
+  //     },
+  //   } = this.props;
+  //   const { data: { userid, username, groupname } } = JSON.parse(localStorage.login);
+  //   this.props.form.validateFields({ force: true }, (error) => {
+  //     if (!error) {
+  //       const { phonenumber, detail } = this.props.form.getFieldsValue();
+  //       const mobile = this.props.form.getFieldsValue().mobile &&
+  //         this.props.form.getFieldsValue().mobile.replace(/\s+/g, '');
+  //       const type = this.props.form.getFieldsValue().type &&
+  //         this.props.form.getFieldsValue().type[0];
+  //       dispatch({
+  //         type: 'workordercommit/commit',
+  //         payload: { phonenumber, type, mobile, detail, urls, username, userid, groupname },
+  //       });
+  //     } else {
+  //       alert('登陆失败');
+  //     }
+  //   });
+  // };
+  // upload = () => {
+  //   const { dispatch, workordercommit: { data: { pictures } } } = this.props;
+  //   const imgs = Promise.all(pictures.map(async (item) => {
+  //     // 图片大图1000kb进行压缩
+  //     if (item.file.size > 1024000) {
+  //       const imgData = await lrz(item.url, { quality: 0.1 });
+  //       return { imgData: imgData.base64 };
+  //     } else {
+  //       const imgData = { imgData: item.url };
+  //       return imgData;
+  //     }
+  //   }));
+  //   imgs.then(data => dispatch({
+  //     type: 'workordercommit/upload',
+  //     payload: data,
+  //   }));
+  // };
+  onSubmit = () => {
+    const {
+      dispatch,
+      workordercommit: {
+        // upload: { urls },
+        data: { pictures },
+      },
+    } = this.props;
+    const { data: { userid, username, groupname } } = JSON.parse(localStorage.login);
     const imgs = Promise.all(pictures.map(async (item) => {
       // 图片大图1000kb进行压缩
       if (item.file.size > 1024000) {
@@ -81,10 +105,34 @@ class WorkOrderCommit extends Component {
         return imgData;
       }
     }));
-    imgs.then(data => dispatch({
-      type: 'workordercommit/upload',
-      payload: data,
-    }));
+    // imgs.then(data => dispatch({
+    //   type: 'workordercommit/upload',
+    //   payload: data,
+    // }));
+    this.props.form.validateFields({ force: true }, async (error) => {
+      if (!error) {
+        const { phonenumber, detail } = this.props.form.getFieldsValue();
+        const mobile = this.props.form.getFieldsValue().mobile &&
+          this.props.form.getFieldsValue().mobile.replace(/\s+/g, '');
+        const type = this.props.form.getFieldsValue().type &&
+          this.props.form.getFieldsValue().type[0];
+        await imgs.then(data => dispatch({
+          type: 'workordercommit/upload',
+          payload: data,
+        }));
+        const {
+          workordercommit: {
+            upload: { urls },
+          },
+        } = this.props;
+        dispatch({
+          type: 'workordercommit/commit',
+          payload: { phonenumber, type, mobile, detail, urls, username, userid, groupname },
+        });
+      } else {
+        alert('登陆失败');
+      }
+    });
   };
   back = () => {
     const { dispatch } = this.props;
@@ -130,11 +178,18 @@ class WorkOrderCommit extends Component {
                 ))}
                 {emptyMap.map(item => <Flex.Item key={item} />)}
               </Flex>
-              <Button size="small" style={{ width: '30%', border: '1px solid #000000' }} onClick={this.upload} loading={loading}>上传</Button>
+              {/* <Button
+                size="small"
+                style={{ width: '30%', border: '1px solid #000000' }}
+                onClick={this.upload}
+                loading={loading}
+              >
+                  上传
+              </Button> */}
             </ListItem>
           </List>
         </form>
-        <Button type="default" onClick={this.onSubmit} className={styles.button}>提交</Button>
+        <Button type="default" onClick={this.onSubmit} className={styles.button} loading={loading}>提交</Button>
         <Modal
           visible={flag}
           transparent
@@ -145,7 +200,7 @@ class WorkOrderCommit extends Component {
           // wrapProps={{ onTouchStart: this.onWrapTouchStart }}
         >
           <div style={{ height: 20 }}>
-            { status === 0 ? '数据更新成功' : '数据提交失败，请重试！'}
+            { status === 0 ? '数据提交成功' : '数据提交失败，请重试！'}
           </div>
         </Modal>
       </div>

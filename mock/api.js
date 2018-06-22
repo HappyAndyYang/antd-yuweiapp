@@ -267,11 +267,15 @@ export const dealType = [
     value: 1,
   },
   {
-    label: '正在处理',
+    label: '已分配',
     value: 2,
   },
   {
-    label: '已处理',
+    label: '正在处理',
     value: 3,
+  },
+  {
+    label: '已处理',
+    value: 100,
   },
 ];
