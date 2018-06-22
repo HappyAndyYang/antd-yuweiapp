@@ -124,14 +124,21 @@ class StaffOrderDetail extends Component {
                   </Card>
                 </WingBlank>
                 <ImagePicker files={detailData.pictures} selectable={false} />
-                <p className={styles.content} style={{ marginTop: '20px' }} >联系人号码：{detailData.mobile}</p>
-                <Picker data={dealType} cols={1} {...getFieldProps('dealstatus')}>
-                  <ListItem arrow="horizontal" className={styles.dealType}>处理状态</ListItem>
-                </Picker>
-                <p className={styles.content}>
+                <div className={styles.content} style={{ marginTop: '20px' }} >联系人号码：{detailData.mobile}</div>
+                <div className={styles.content}>
+                  <Picker data={dealType} cols={1} {...getFieldProps('dealstatus')}>
+                    <ListItem style={{ padding: 0 }} arrow="horizontal" className={styles.dealType}>处理状态</ListItem>
+                  </Picker>
+                </div>
+                <div className={styles.content}>
                   创建时间：{moment(detailData.createtime).format('YYYY-MM-DD hh:mm:ss')}
-                </p>
-                <p className={styles.content}>处理详情</p>
+                </div>
+                <div className={styles.content} style={{ paddingTop: 10 }}>处理详情</div>
+                {detailData.deals.map(item => (
+                  <div key={item.createtime} style={{ paddingLeft: '8%', paddingBottom: 5, paddingRight: '5%' }}>
+                    {item.detail}
+                  </div>
+                ))}
                 <WingBlank size="lg">
                   <Card>
                     <Card.Body style={{ padding: 0 }}>

@@ -74,7 +74,12 @@ class WorkOrderDetail extends Component {
               <WingBlank size="lg">
                 <Card>
                   <Card.Body>
-                    <div>{detailData.content}</div>
+                    {/* <div>{detailData.content}</div> */}
+                    {detailData.deals.map(item => (
+                      <div key={item.createtime} style={{ paddingBottom: 5 }}>
+                        {item.detail}
+                      </div>
+                    ))}
                   </Card.Body>
                 </Card>
               </WingBlank>
