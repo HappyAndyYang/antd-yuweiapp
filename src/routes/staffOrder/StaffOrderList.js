@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { NavBar, Icon, PullToRefresh } from 'antd-mobile';
+import { NavBar, Icon, PullToRefresh, Button } from 'antd-mobile';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import styles from '../deviceManager/deviceManager.less';
 
 import StaffOrderLists from '../../components/StaffOrder/StaffOrderList';
@@ -41,6 +42,11 @@ class StaffOrderList extends Component {
       });
     }
   }
+  logout = () => {
+    const { dispatch } = this.props;
+    localStorage.removeItem('stafflogin');
+    dispatch(routerRedux.push('/stafflogin'));
+  }
   render() {
     const { dispatch, stafforderlist: { status, data: { list } } } = this.props;
     // workList.push(...list);
@@ -48,8 +54,8 @@ class StaffOrderList extends Component {
       <div>
         <NavBar
           mode="light"
-          onLeftClick={this.back}
           className={styles.navbar}
+          rightContent={<Button size="small" style={{ background: '#FFCC00', border: '0px solid #FFCC00' }} onClick={this.logout}> 退出 </Button>}
         >
           工单列表
         </NavBar>
