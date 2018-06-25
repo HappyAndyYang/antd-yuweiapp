@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavBar, Icon, PullToRefresh, Button } from 'antd-mobile';
+import { NavBar, Icon, PullToRefresh } from 'antd-mobile';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import styles from '../deviceManager/deviceManager.less';
@@ -55,7 +55,19 @@ class StaffOrderList extends Component {
         <NavBar
           mode="light"
           className={styles.navbar}
-          rightContent={<Button size="small" style={{ background: '#FFCC00', border: '0px solid #FFCC00' }} onClick={this.logout}> 退出 </Button>}
+          rightContent={
+            <div
+              key="1"
+              style={{
+                background: '#FFCC00',
+                fontSize: 14,
+                marginRight: 15,
+              }}
+              onClick={this.logout}
+            >
+              退出
+            </div>
+          }
         >
           工单列表
         </NavBar>

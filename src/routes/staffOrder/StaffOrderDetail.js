@@ -9,6 +9,13 @@ import styles from '../deviceManager/deviceManager.less';
 const ListItem = List.Item;
 @connect(({ stafforderlist, user, workorderlist }) => ({ stafforderlist, user, workorderlist }))
 class StaffOrderDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imgflag: false,
+      imgurl: '',
+    };
+  }
   componentDidMount() {
     this.queryWorkOrderDetail();
   }
@@ -19,6 +26,18 @@ class StaffOrderDetail extends Component {
     dispatch({
       type: 'stafforderlist/onclose',
     });
+  }
+  onImageClick = (index) => {
+    const {
+      workorderlist: {
+        detail: {
+          data: {
+            pictures,
+          },
+        },
+      },
+    } = this.props;
+    this.setState({ imgurl: pictures[index].url, imgflag: true });
   }
   onSubmit = () => {
     const {
@@ -42,6 +61,9 @@ class StaffOrderDetail extends Component {
       }
     });
   };
+  imgClose = () => {
+    this.setState({ imgflag: false });
+  }
   queryWorkOrderDetail() {
     const {
       dispatch,
@@ -123,7 +145,11 @@ class StaffOrderDetail extends Component {
                     </Card.Body>
                   </Card>
                 </WingBlank>
-                <ImagePicker files={detailData.pictures} selectable={false} />
+                <ImagePicker
+                  files={detailData.pictures}
+                  selectable={false}
+                  onImageClick={this.onImageClick}
+                />
                 <div className={styles.content} style={{ marginTop: '20px' }} >联系人号码：{detailData.mobile}</div>
                 <div className={styles.content}>
                   <Picker data={dealType} cols={1} {...getFieldProps('dealstatus')}>
@@ -133,12 +159,12 @@ class StaffOrderDetail extends Component {
                 <div className={styles.content}>
                   创建时间：{moment(detailData.createtime).format('YYYY-MM-DD hh:mm:ss')}
                 </div>
-                <div className={styles.content} style={{ paddingTop: 10 }}>处理详情</div>
-                {detailData.deals.map(item => (
-                  <div key={item.createtime} style={{ paddingLeft: '8%', paddingBottom: 5, paddingRight: '5%' }}>
+                <div className={styles.content} style={{ paddingTop: 10, paddingBottom: 5 }}>处理详情</div>
+                {detailData.deals ? detailData.deals.map(item => (
+                  <div key={item.createtime} style={{ paddingLeft: '8%', paddingTop: 5, paddingRight: '5%' }}>
                     {item.detail}
                   </div>
-                ))}
+                )) : null}
                 <WingBlank size="lg">
                   <Card>
                     <Card.Body style={{ padding: 0 }}>
@@ -165,6 +191,19 @@ class StaffOrderDetail extends Component {
                 <div style={{ height: 20 }}>
                   { status === 0 ? '数据更新成功' : '数据提交失败，请重试！'}
                 </div>
+              </Modal>
+              <Modal
+                visible={this.state.imgflag}
+                transparent
+                maskClosable
+                onClose={this.imgClose}
+                className={styles.imgView}
+              >
+                <img
+                  alt="预览图片失败，请重新尝试"
+                  src={this.state.imgurl}
+                  style={{ padding: 0, width: '100%' }}
+                />
               </Modal>
             </div>
           )

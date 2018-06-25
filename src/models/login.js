@@ -26,7 +26,7 @@ export default {
           loginTime: new Date(),
         });
         localStorage.setItem('login', str);
-        yield put(routerRedux.push('/'));
+        yield put(routerRedux.push('/fault'));
       }
     },
     *logout({ payload }, { call, put }) {

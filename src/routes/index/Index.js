@@ -39,7 +39,15 @@ class Main extends Component {
         <NavBar
           className={styles.navbar}
           // rightContent="退出"
-          rightContent={<Button size="small" style={{ background: '#FFCC00', border: '0px solid #FFCC00' }} onClick={this.logout}> 退出 </Button>}
+          rightContent={
+            <Button
+              size="small"
+              style={{ background: '#FFCC00', border: '0px solid #FFCC00' }}
+              onClick={this.logout}
+            >
+              退出
+            </Button>
+          }
         >
           商云通
         </NavBar>

@@ -15,7 +15,7 @@ class Login extends Component {
       console.log(day);
       if (username && day < 15) {
         const { dispatch } = this.props;
-        dispatch(routerRedux.push('/'));
+        dispatch(routerRedux.push('/fault'));
       }
     }
   }

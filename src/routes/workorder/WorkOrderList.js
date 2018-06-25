@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar, Icon, PullToRefresh } from 'antd-mobile';
+import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 // import { routerRedux } from 'dva/router';
 import styles from '../deviceManager/deviceManager.less';
@@ -57,6 +58,11 @@ class WorkOrderList extends Component {
       payload: '',
     });
   }
+  logout = () => {
+    const { dispatch } = this.props;
+    localStorage.removeItem('login');
+    dispatch(routerRedux.push('/login'));
+  }
   render() {
     const { dispatch, workorderlist: { status, data: { list } } } = this.props;
     // workList.push(...list);
@@ -68,7 +74,27 @@ class WorkOrderList extends Component {
           onLeftClick={this.back}
           className={styles.navbar}
           rightContent={[
-            <Icon key="0" type="plus" size="xxs" style={{ marginRight: '5%' }} onClick={this.add} />,
+            <div
+              key="1"
+              style={{
+                background: '#FFCC00',
+                fontSize: 14,
+                marginRight: 15,
+              }}
+              onClick={this.add}
+            >
+              添加
+            </div>,
+            <div
+              key="2"
+              style={{
+              background: '#FFCC00',
+              fontSize: 14,
+            }}
+              onClick={this.logout}
+            >
+              退出
+            </div>,
           ]}
         >
           工单列表
