@@ -159,7 +159,12 @@ class StaffOrderDetail extends Component {
                 <div className={styles.content}>
                   创建时间：{moment(detailData.createtime).format('YYYY-MM-DD hh:mm:ss')}
                 </div>
-                <div className={styles.content} style={{ paddingTop: 10, paddingBottom: 5 }}>处理详情</div>
+                <div
+                  className={styles.content}
+                  style={{ paddingTop: 10, paddingBottom: 5 }}
+                >
+                  处理详情
+                </div>
                 {detailData.deals ? detailData.deals.map(item => (
                   <div key={item.createtime} style={{ paddingLeft: '8%', paddingTop: 5, paddingRight: '5%' }}>
                     {item.detail}
