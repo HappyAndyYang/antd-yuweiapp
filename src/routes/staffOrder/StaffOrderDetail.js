@@ -166,11 +166,11 @@ class StaffOrderDetail extends Component {
                   处理详情
                 </div>
                 {detailData.deals ? detailData.deals.map(item => (
-                  <div key={item.createtime} style={{ paddingLeft: '8%', paddingTop: 5, paddingRight: '5%' }}>
+                  <div key={item.createtime} style={{ paddingLeft: '8%', paddingTop: 5, paddingRight: '5%'}}>
                     {item.detail}
                   </div>
                 )) : null}
-                <WingBlank size="lg">
+                <WingBlank size="lg" style={{ paddingTop: 10 }}>
                   <Card>
                     <Card.Body style={{ padding: 0 }}>
                       {/* <div>{detailData.content}</div> */}
