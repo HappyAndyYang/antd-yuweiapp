@@ -1,3 +1,4 @@
+import { routerRedux } from 'dva/router';
 import { getStaffOrderList, updateStaffOrder } from '../services/deviceManager';
 
 export default {
@@ -69,6 +70,7 @@ export default {
         type: 'saveUpdate',
         payload: updateData,
       });
+      yield put(routerRedux.goBack());
     },
     *init(_, { put }) {
       const list = [];

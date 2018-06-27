@@ -1,4 +1,4 @@
-// import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva/router';
 import { commitWorkOrder, uploadpic } from '../services/deviceManager';
 
 export default {
@@ -42,6 +42,7 @@ export default {
           },
         },
       });
+      yield put(routerRedux.goBack());
     },
     *change({ payload }, { put }) {
       const { files, urls, status } = payload;
