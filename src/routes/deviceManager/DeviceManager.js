@@ -20,11 +20,6 @@ class DeviceManager extends Component {
   queryBindTerminal() {
     const {
       dispatch,
-      // weichat: {
-      //   data: {
-      //     openid,
-      //   },
-      // },
     } = this.props;
     const code = getQueryStrFromUrl('code');
     const userCode = localStorage.getItem('userCode');

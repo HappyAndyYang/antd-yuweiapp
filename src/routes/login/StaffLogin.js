@@ -3,11 +3,66 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { NavBar, Button, InputItem, List } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import { getQueryStrFromUrl } from '../../utils/utils';
 import styles from '../deviceManager/deviceManager.less';
 
-@connect(({ stafflogin }) => ({ stafflogin }))
+@connect(({ stafflogin, weichat }) => ({ stafflogin, weichat }))
 class StaffLogin extends Component {
   componentDidMount() {
+    // if (localStorage.stafflogin) {
+    //   const { data: { staffname, staffid }, loginTime } = JSON.parse(localStorage.stafflogin);
+    //   const now = (new Date()).getTime();
+    //   const day = Math.floor((now - (new Date(loginTime).getTime())) / (24 * 3600 * 1000));
+    //   // console.log(day);
+    //   if (staffname && staffid && day < 15) {
+    //     const { dispatch } = this.props;
+    //     dispatch(routerRedux.push('/stafforderlist'));
+    //   }
+    // }
+    const {
+      dispatch,
+    } = this.props;
+    const code = getQueryStrFromUrl('code');
+    const userCode = localStorage.getItem('userCode');
+    if (userCode || code) {
+      if (userCode) {
+        this.login();
+      } else {
+        localStorage.setItem('userCode', code);
+        dispatch({
+          type: 'weichat/getUserInfo',
+          payload: { code },
+        }).then(() => {
+          this.login();
+        });
+      }
+    } else {
+      const backurl = window.document.location.href;
+      dispatch({
+        type: 'weichat/getAuthorizeURLFroWebsite',
+        payload: { backurl },
+      });
+    }
+  }
+  onSubmit = () => {
+    const { dispatch } = this.props;
+    const { weichat: { data: { openid } } } = this.props;
+    this.props.form.validateFields({ force: true }, (error) => {
+      if (!error) {
+        const { staffname, passwd } = this.props.form.getFieldsValue();
+        dispatch({
+          type: 'stafflogin/login',
+          payload: { staffname, passwd, openid },
+        });
+      } else {
+        alert('登陆失败');
+      }
+    });
+  };
+  // componentDidMount() {
+  //   this.queryBindTerminal();
+  // }
+  login() {
     if (localStorage.stafflogin) {
       const { data: { staffname, staffid }, loginTime } = JSON.parse(localStorage.stafflogin);
       const now = (new Date()).getTime();
@@ -19,20 +74,6 @@ class StaffLogin extends Component {
       }
     }
   }
-  onSubmit = () => {
-    const { dispatch } = this.props;
-    this.props.form.validateFields({ force: true }, (error) => {
-      if (!error) {
-        const { staffname, passwd } = this.props.form.getFieldsValue();
-        dispatch({
-          type: 'stafflogin/login',
-          payload: { staffname, passwd },
-        });
-      } else {
-        alert('登陆失败');
-      }
-    });
-  };
 
   render() {
     const { getFieldProps } = this.props.form;

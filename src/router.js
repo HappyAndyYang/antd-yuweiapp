@@ -31,7 +31,7 @@ function RouterConfig({ history, app }) {
   });
   const StaffLogin = Dynamic({
     app,
-    models: () => [import('./models/stafflogin')],
+    models: () => [import('./models/stafflogin'), import('./models/weichat')],
     component: () => import('./routes/login/StaffLogin'),
   });
   const WorkOrderCommit = Dynamic({
